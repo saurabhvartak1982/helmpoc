@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helmpocapp-deployment
+  namespace: helmpocappns
+spec:
+  replicas: {{ .Values.replicaCount }} #2
+  selector:
+    matchLabels:
+      app: helmpocapp
+  template:
+    metadata:
+      labels:
+          app: helmpocapp
+    spec:
+      containers:
+        - name: {{ .Chart.Name }} #helmpocappcont
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          ports:
+            - containerPort: 5000
+          resources:
+              limits:
+                cpu: 0.25    
